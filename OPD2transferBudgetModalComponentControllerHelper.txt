@@ -1,0 +1,59 @@
+({
+    closeTransferBudgetModal : function(component, event, helper) {
+        component.set("v.showLargeModal", false);
+    },
+    showTransferBudgetModalToast : function(component, event, helper) {
+        var toastEvent = $A.get("e.force:showToast");
+        toastEvent.setParams({
+            message: 'Budget has been allocated'
+        });
+        toastEvent.fire();
+        //alert("Budget has been allocated");
+        component.set("v.showSpinner", false);
+        component.set("v.showLargeModal", false);
+    },
+    clearDetails : function(component, event, helper){
+        component.set("v.budgetAllocationHistoryOrganizationUnit", null);
+        component.set("v.budgetAllocationHistoryOrganizationUnitPhone", null);
+    },
+    autoAllocate : function(component, event, helper){
+        var budgetAllocationHistoryOrganizationUnitLowLevel = component.get("v.budgetAllocationHistoryOrganizationUnitLowLevel").length;
+        var allocatedAmount = component.get("v.amount");
+        allocatedAmount = (allocatedAmount/budgetAllocationHistoryOrganizationUnitLowLevel).toFixed(2);
+        component.set("v.allocatedAmount", allocatedAmount);
+    },
+    showBudgetAccessModalHelper : function(component, event, helper){
+        document.body.setAttribute('style', 'overflow: hidden');
+        component.set('v.showSearchAddOrgUnitModal',true);
+    },
+    /*searchOrganizationUnitOnLinkClick : function (component, event, helper) {
+        var searchOrganizationUnitEvent = $A.get("e.force:navigateToURL");
+        searchOrganizationUnitEvent.setParams({
+            "url": "https://ahmopd3-dev-ed.lightning.force.com/lightning/n/Home"
+        });
+        searchOrganizationUnitEvent.fire();
+    },*/    
+    handleSelectMenuButtonHelper : function(component, event , helper){
+        
+        var selectedMenuItem =event.getParam('value');
+        var amountIN=component.get('v.amountIn');
+        if(selectedMenuItem=='DOLLER' && amountIN=='RUP'){
+            var amount= component.get('v.amount');
+            var allocatedAmount = component.get("v.allocatedAmount");
+            var amountInRupees=(amount/70).toFixed(2);
+            var allocatedAmountInRupees = (allocatedAmount/70).toFixed(2);
+            component.set('v.amount',amountInRupees);
+            component.set('v.allocatedAmount',allocatedAmountInRupees);
+            component.set('v.amountIn','USD');
+        }
+        else if(selectedMenuItem=='RUPEE' && amountIN=='USD'){
+            var amount= component.get('v.amount');
+            var allocatedAmount = component.get("v.allocatedAmount");
+            var amountInRupees=(amount*70).toFixed(2);
+            var allocatedAmountInRupees = (allocatedAmount*70).toFixed(2);
+            component.set('v.amount',amountInRupees);
+            component.set('v.allocatedAmount',allocatedAmountInRupees);
+            component.set('v.amountIn','RUP');
+        }
+    }
+})

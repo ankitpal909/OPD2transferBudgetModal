@@ -1,0 +1,29 @@
+({
+    closeTransferBudgetModal : function(component, event, helper) {
+        helper.closeTransferBudgetModal(component, event, helper);
+    },
+    showTransferBudgetModalToast : function(component, event, helper) {
+        component.set("v.showSpinner", true);
+        helper.showTransferBudgetModalToast(component, event, helper);
+    },
+    clearDetails : function(component, event, helper){
+        helper.clearDetails(component, event, helper);
+    },
+    autoAllocate : function(component, event, helper){
+        helper.autoAllocate(component, event, helper);
+    },
+    showBudgetAccessModal : function(component, event, helper){
+        helper.showBudgetAccessModalHelper(component, event, helper);
+    },
+    /*searchOrganizationUnitOnLinkClick : function(component, event, helper){
+        helper.searchOrganizationUnitOnLinkClick(component, event, helper);
+    },*/
+    
+    handleSelectMenuButton : function(component, event, helper){
+        helper.handleSelectMenuButtonHelper(component, event, helper);
+    },
+    handleInteractionCompEvent : function(component, event, helper){
+        var action = event.getParam("action");
+        component.set("v.showModal", true);
+    }
+})
